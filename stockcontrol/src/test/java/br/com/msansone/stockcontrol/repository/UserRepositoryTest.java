@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,6 +50,7 @@ class UserRepositoryTest {
         User user = new User();
         user.setName("Jose teste");
         user.setEmail("teste");
+        user.setDtcreated(LocalDateTime.now());
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<User>> violations = validator.validate(user);
@@ -64,6 +66,7 @@ class UserRepositoryTest {
         user.setEmail("teste@email.com");
         user.setPassword("123");
         user.setActived(true);
+        user.setDtcreated(LocalDateTime.now());
         User newUser= userService.insert(user);
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
@@ -72,6 +75,24 @@ class UserRepositoryTest {
         assertThat(violations.iterator().next().getMessage()).contains("must be a well-formed email address");
     }
 
+    @Test
+    @DisplayName("Should´nt accept user without dtcreated")
+    void notAcceptUserWithoutDtcreatedTest(){
+        User user = new User();
+        user.setName("Jose teste");
+        user.setEmail("teste@email.com");
+        user.setPassword("123");
+        user.setActived(true);
+        // dtcreated is not set
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        assertThat(violations).isNotEmpty(); // Garante que há erro de validação
+        assertThat(violations.stream()
+                .anyMatch(v -> v.getPropertyPath().toString().equals("dtcreated") && 
+                        v.getMessage().contains("must not be null")))
+                .isTrue();
+    }
 
     private User createUser(){
         User user = new User();
@@ -79,6 +100,7 @@ class UserRepositoryTest {
         user.setEmail("teste@email.com");
         user.setPassword("123");
         user.setActived(true);
+        user.setDtcreated(LocalDateTime.now());
         this.entityManager.persist(user);
         return user;
     }

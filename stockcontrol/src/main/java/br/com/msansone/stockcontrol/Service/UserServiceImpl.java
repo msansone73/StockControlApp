@@ -5,6 +5,7 @@ import br.com.msansone.stockcontrol.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -36,6 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User insert(User user) {
+        user.setDtcreated(LocalDateTime.now());
         userRepository.save(user);
         return user;
     }

@@ -3,7 +3,10 @@ package br.com.msansone.stockcontrol.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -20,5 +23,9 @@ public class User {
     @NotBlank
     private String password;
     private boolean actived;
+    
+    @NotNull
+    @Column(nullable = false)
+    private LocalDateTime dtcreated;
 
 }
