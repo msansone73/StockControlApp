@@ -66,24 +66,6 @@ import { User, UserService } from '../../../services/user.service';
               }
             </div>
 
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input 
-                type="password" 
-                id="password" 
-                formControlName="password" 
-                placeholder="Enter password (leave empty to keep current)"
-                [class.invalid]="isFieldInvalid('password')"
-              >
-              @if (isFieldInvalid('password')) {
-                <div class="error-message">
-                  @if (userForm.get('password')?.hasError('minlength')) {
-                    Password must be at least 3 characters
-                  }
-                </div>
-              }
-            </div>
-
             <div class="form-group checkbox-group">
               <label class="checkbox-container">
                 <input type="checkbox" formControlName="actived">
@@ -193,8 +175,7 @@ import { User, UserService } from '../../../services/user.service';
       }
 
       input[type="text"],
-      input[type="email"],
-      input[type="password"] {
+      input[type="email"] {
         width: 100%;
         padding: 10px 12px;
         border: 1px solid #ddd;
@@ -328,7 +309,6 @@ export class EditUserComponent implements OnInit {
     this.userForm = this.fb.group({
       name: [user?.name || '', Validators.required],
       email: [user?.email || '', [Validators.required, Validators.email]],
-      password: ['', Validators.minLength(3)], // Password is optional for editing
       actived: [user?.actived ?? true]
     });
   }
@@ -369,11 +349,6 @@ export class EditUserComponent implements OnInit {
     
     // Create a copy of the form value
     const userData = { ...this.userForm.value };
-    
-    // If password is empty, remove it from the request
-    if (!userData.password) {
-      delete userData.password;
-    }
     
     this.userService.updateUser({ ...userData, id: this.userId }).subscribe({
       next: () => {

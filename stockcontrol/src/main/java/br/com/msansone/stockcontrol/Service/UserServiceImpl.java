@@ -4,6 +4,7 @@ import br.com.msansone.stockcontrol.model.User;
 import br.com.msansone.stockcontrol.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,7 +30,9 @@ public class UserServiceImpl implements UserService {
         User userCurrent = this.getById(id);
         userCurrent.setName(user.getName());
         userCurrent.setEmail(user.getEmail());
-        userCurrent.setPassword(user.getPassword());
+        if (user.getPassword() != null && !user.getPassword().trim().isEmpty()) {
+            userCurrent.setPassword(user.getPassword());
+        }
         userCurrent.setActived(user.isActived());
         userRepository.save(userCurrent);
         return userCurrent;
