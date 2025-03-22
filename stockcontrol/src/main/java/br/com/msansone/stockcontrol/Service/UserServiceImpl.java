@@ -1,6 +1,7 @@
 package br.com.msansone.stockcontrol.Service;
 
 import br.com.msansone.stockcontrol.model.User;
+import br.com.msansone.stockcontrol.model.enums.Role;
 import br.com.msansone.stockcontrol.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ public class UserServiceImpl implements UserService {
         if (user.getPassword() != null && !user.getPassword().trim().isEmpty()) {
             userCurrent.setPassword(user.getPassword());
         }
+        userCurrent.setRole(user.getRole());
         userCurrent.setActived(user.isActived());
         userRepository.save(userCurrent);
         return userCurrent;
@@ -41,6 +43,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User insert(User user) {
         user.setDtcreated(LocalDateTime.now());
+        if (user.getRole() == null) {
+            user.setRole(Role.USER); // Default to USER if not specified
+        }
         userRepository.save(user);
         return user;
     }

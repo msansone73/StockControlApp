@@ -1,0 +1,69 @@
+<div class="page-container">
+  <div class="page-header">
+    <h2>Add New User</h2>
+    <button class="back-button" routerLink="/users">
+      <i class="fas fa-arrow-left"></i>
+      Back to Users
+    </button>
+  </div>
+
+  <div class="form-container">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" formControlName="name">
+        <div class="error-message" *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+          Name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email">
+        <div class="error-message" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+          Valid email is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" formControlName="password">
+        <div class="error-message" *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+          Password is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Role</label>
+        <select id="role" formControlName="role">
+          <option value="">Select a role</option>
+          <option [value]="userRoles.ADMIN">Admin</option>
+          <option [value]="userRoles.MANAGER">Manager</option>
+          <option [value]="userRoles.USER">User</option>
+          <option [value]="userRoles.GUEST">Guest</option>
+        </select>
+        <div class="error-message" *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched">
+          Role is required
+        </div>
+      </div>
+
+      <div class="checkbox-group">
+        <div class="checkbox-container">
+          <input type="checkbox" id="actived" formControlName="actived">
+          <label class="checkbox-label" for="actived">Active</label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-button" routerLink="/users">Cancel</button>
+        <button type="submit" class="submit-button" [disabled]="userForm.invalid">
+          <span *ngIf="!isSubmitting">Save User</span>
+          <span *ngIf="isSubmitting">
+            <span class="spinner"></span>
+            Saving...
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div> 

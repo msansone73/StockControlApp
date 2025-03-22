@@ -32,11 +32,17 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> insert(@RequestBody User user){
+        if (user.getRole() == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(userService.insert(user));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user){
+        if (user.getRole() == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(userService.update(id,user));
     }
 

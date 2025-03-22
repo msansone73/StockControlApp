@@ -13,12 +13,12 @@ export const routes: Routes = [
   },
   {
     path: 'users/add',
-    loadComponent: () => import('./pages/users/add-user/add-user.component')
+    loadComponent: () => import('./pages/add-user/add-user.component')
       .then(m => m.AddUserComponent)
   },
   {
     path: 'users/edit/:id',
-    loadComponent: () => import('./pages/users/edit-user/edit-user.component')
+    loadComponent: () => import('./pages/edit-user/edit-user.component')
       .then(m => m.EditUserComponent)
   },
   {

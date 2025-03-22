@@ -2,11 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  MANAGER = 'MANAGER',
+  USER = 'USER',
+  GUEST = 'GUEST'
+}
+
 export interface User {
   id: number;
   name: string;
   email: string;
   password: string;
+  role: UserRole;
   actived: boolean;
 }
 
