@@ -12,4 +12,5 @@ public interface UserService {
     User insert(User user);
 
     void delete(User user);
+    User login(String email, String password);
 }

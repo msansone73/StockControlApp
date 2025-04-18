@@ -1,0 +1,26 @@
+
+<p>Users:</p>
+
+<button class="button add" (click)="addUser()">
+        Adicionar
+</button>
+
+<div class="content">
+    @for(item of users; track item.id) {
+      <div class="user-card">
+        <div class="user-col-40">
+          User: {{ item.name }}
+        </div>
+        <div>
+          <button class="button edit" (click)="editUser(item)">
+            Editar
+          </button>
+          <button class="button delete" (click)="deleteUser(item)">
+              Deletar
+          </button>
+        </div>
+        
+      </div>
+      }
+      
+</div>

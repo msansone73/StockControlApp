@@ -7,16 +7,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin( origins = "*")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
     UserService userService;
-
 
     @GetMapping
     public ResponseEntity<List<User>> getAll(){
@@ -55,5 +57,20 @@ public class UserController {
         userService.delete(user);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody User user) {
+        String email = user.getEmail();
+        String password = user.getPassword();
+        if (email == null || password == null) {
+            return ResponseEntity.badRequest().body("Email and password are required");
+        }
+        user = userService.login(email, password);
+        if (user == null) {
+            return ResponseEntity.status(401).body("Invalid credentials");
+        }
+        return ResponseEntity.ok(user);
+    }
+    
 }
 
