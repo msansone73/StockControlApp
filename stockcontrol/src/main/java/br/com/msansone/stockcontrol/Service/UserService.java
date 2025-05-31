@@ -1,8 +1,6 @@
 package br.com.msansone.stockcontrol.Service;
 
 import br.com.msansone.stockcontrol.model.User;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 public interface UserService {
