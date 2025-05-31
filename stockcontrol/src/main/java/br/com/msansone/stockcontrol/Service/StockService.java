@@ -11,5 +11,10 @@ public interface StockService {
 
     Stock insert(Stock stock);
 
+    Stock update(Stock stock);
+
     Stock getByTick(String tick);
+
+    void delete(Stock stock);
+
 }

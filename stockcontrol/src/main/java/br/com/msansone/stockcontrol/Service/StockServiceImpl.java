@@ -29,5 +29,15 @@ public class StockServiceImpl implements StockService {
         return stockRepository.findByTick(tick);
     }
 
-    
+    @Override
+    public Stock update(Stock stock) {
+        return stockRepository.save(stock);
+    }
+
+    @Override
+    public void delete(Stock stock) {
+        stockRepository.delete(stock);
+    }
+
+
 }
