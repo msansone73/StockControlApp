@@ -10,5 +10,6 @@ public interface StockService {
     List<Stock> getAll();
 
     Stock insert(Stock stock);
-    
+
+    Stock getByTick(String tick);
 }

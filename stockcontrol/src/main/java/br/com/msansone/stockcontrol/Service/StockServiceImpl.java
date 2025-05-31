@@ -23,5 +23,11 @@ public class StockServiceImpl implements StockService {
     public Stock insert(Stock stock) {
         return stockRepository.save(stock);
     }
+
+    @Override
+    public Stock getByTick(String tick) {
+        return stockRepository.findByTick(tick);
+    }
+
     
 }

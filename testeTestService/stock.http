@@ -1,10 +1,15 @@
-### GET /users
+### GET /STOCK
 GET http://localhost:8080/stock HTTP/1.1
 
 ###
 
+### GET /STOCK/TICK
+GET http://localhost:8080/stock/PETR4 HTTP/1.1
 
-### POST /users
+###
+
+
+### POST /STOCK
 POST http://localhost:8080/stock HTTP/1.1
 Content-Type: application/json
 
