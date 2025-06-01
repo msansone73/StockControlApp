@@ -2,10 +2,15 @@ package br.com.msansone.stockcontrol.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import br.com.msansone.stockcontrol.model.enums.TransactionType;
 
 @Data
 @Entity
@@ -14,17 +19,18 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
-    @ManyToOne(cascade = CascadeType.ALL,fetch =FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch =FetchType.EAGER)
     private User user;
-    @NotBlank
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.DETACH,fetch =FetchType.EAGER)
     private Stock stock;
-    @NotBlank
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate transactionDate;
-    @NotBlank
+    @NotNull
     private BigDecimal unitaryValue;
-    @NotBlank
+    @NotNull
     private Long quantity;
+    @NotNull
+    private TransactionType transactionType;
 
 }
