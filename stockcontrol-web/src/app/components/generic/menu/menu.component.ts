@@ -34,7 +34,7 @@ export class MenuComponent {
   menuItems = [
     { name: 'Home', route: '/home' },
     { name: 'About', route: '/about' },
-
+    { name: 'Stock List', route: '/stock-list' },
     { name: 'User List', route: '/user-list' },
     { name: 'Login', route: '/login' },
   ];

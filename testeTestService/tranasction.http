@@ -11,9 +11,27 @@ Content-Type: application/json
     "tick": "PETR4"
   },
   "quantity": 20,
-  "unitaryValue": 30.7,
+  "unitaryValue": 30.9,
   "transactionType": "BUY",
-  "transactionDate": "2023-10-26",
+  "transactionDate": "2023-10-29",
+  "user":     {
+    "id": 1
+  }
+}
+
+###
+### PUT /transactions
+PUT http://localhost:8080/transactions/4 HTTP/1.1
+Content-Type: application/json
+
+{
+  "stock": {
+    "tick": "PETR4"
+  },
+  "quantity": 40,
+  "unitaryValue": 30.9,
+  "transactionType": "BUY",
+  "transactionDate": "2023-10-29",
   "user":     {
     "id": 1
   }

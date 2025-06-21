@@ -4,6 +4,7 @@ import { AboutComponent } from './components/page/about/about.component';
 import { UserListComponent } from './components/page/user-list/user-list.component';
 import { UserFormComponent } from './components/page/user-form/user-form.component';
 import { LoginComponent } from './components/page/login/login.component';
+import { StockListComponent } from './components/page/stock-list/stock-list.component';
 
 export const routes: Routes = [
     {
@@ -33,6 +34,10 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'stock-list',
+        component: StockListComponent
     }
 
 ];

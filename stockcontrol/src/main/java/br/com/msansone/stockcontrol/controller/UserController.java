@@ -1,14 +1,16 @@
 package br.com.msansone.stockcontrol.controller;
 
 import br.com.msansone.stockcontrol.Service.UserService;
+import br.com.msansone.stockcontrol.dto.UserRequestDto;
+import br.com.msansone.stockcontrol.exceptions.InvalidFormatExcption;
 import br.com.msansone.stockcontrol.model.User;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -19,7 +21,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
     @GetMapping
     public ResponseEntity<List<User>> getAll(){
         List<User> users=userService.getAll();
@@ -32,8 +33,11 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @ExceptionHandler(InvalidFormatExcption.class)
+    
     @PostMapping
-    public ResponseEntity<User> insert(@RequestBody User user){
+    public ResponseEntity<User> insert(@Valid @RequestBody UserRequestDto userDto){
+        User user = userDto.toUser();
         if (user.getRole() == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -71,6 +75,6 @@ public class UserController {
         }
         return ResponseEntity.ok(user);
     }
-    
+
 }
 
