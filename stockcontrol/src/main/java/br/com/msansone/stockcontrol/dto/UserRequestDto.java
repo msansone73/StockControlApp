@@ -26,7 +26,7 @@ public record UserRequestDto(
     //          message = "A senha deve conter letras maiúsculas, minúsculas, números e caracteres especiais.")
     String password,
     
-    @NotNull(message = "A role (função) não pode ser nula.")
+    @NotNull(message = "{error.invalidRole}")
     Role role
 ) {
     // Corpo do record fica vazio

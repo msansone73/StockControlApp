@@ -1,9 +1,9 @@
 package br.com.msansone.stockcontrol.Service;
 
+import br.com.msansone.stockcontrol.exceptions.UserNotFoundException;
 import br.com.msansone.stockcontrol.model.User;
 import br.com.msansone.stockcontrol.model.enums.Role;
 import br.com.msansone.stockcontrol.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,8 +12,14 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    //@Autowired
+    //UserRepository userRepository;
 
     @Override
     public List<User> getAll() {
@@ -21,12 +27,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public User getById(Long id) throws UserNotFoundException {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Override
-    public User update(Long id, User user) {
+    public User update(Long id, User user) throws UserNotFoundException {
         User userCurrent = this.getById(id);
         userCurrent.setName(user.getName());
         userCurrent.setEmail(user.getEmail());

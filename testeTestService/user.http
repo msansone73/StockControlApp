@@ -1,6 +1,10 @@
 ### GET /users
 GET http://localhost:8080/users HTTP/1.1
 
+
+### GET /users/7
+GET http://localhost:8080/users/7 HTTP/1.1
+
 ###
 
 

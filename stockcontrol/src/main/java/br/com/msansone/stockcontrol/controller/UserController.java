@@ -3,10 +3,10 @@ package br.com.msansone.stockcontrol.controller;
 import br.com.msansone.stockcontrol.Service.UserService;
 import br.com.msansone.stockcontrol.dto.UserRequestDto;
 import br.com.msansone.stockcontrol.exceptions.InvalidFormatExcption;
+import br.com.msansone.stockcontrol.exceptions.UserNotFoundException;
 import br.com.msansone.stockcontrol.model.User;
 import jakarta.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +19,12 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping
     public ResponseEntity<List<User>> getAll(){
         List<User> users=userService.getAll();
@@ -30,11 +34,9 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<User> getById(@PathVariable Long id){
         User user = userService.getById(id);
-        return ResponseEntity.ok(user);
-    }
+            return ResponseEntity.ok(user);    }
 
     @ExceptionHandler(InvalidFormatExcption.class)
-    
     @PostMapping
     public ResponseEntity<User> insert(@Valid @RequestBody UserRequestDto userDto){
         User user = userDto.toUser();
@@ -63,7 +65,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody User user) {
+    public ResponseEntity<?> login(@RequestBody User user) {
         String email = user.getEmail();
         String password = user.getPassword();
         if (email == null || password == null) {
