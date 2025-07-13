@@ -1,7 +1,10 @@
 package br.com.msansone.stockcontrol.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import br.com.msansone.stockcontrol.dto.StockDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,13 +28,21 @@ public class StockController {
     StockService stockService;
 
     @GetMapping
-    public ResponseEntity<List<Stock>> getAll(){
+    public ResponseEntity<List<StockDto>> getAll(){
         List<Stock> stocks=stockService.getAll();
-        return ResponseEntity.ok(stocks);
+        List<StockDto> stockRequestDtos =
+                stocks.
+                stream().
+                map(s -> new StockDto( s.getTick(),
+                                                    s.getStockType(),
+                                                    s.getCompany(),
+                                                    s.getDescription())).
+                collect(Collectors.toList());
+        return ResponseEntity.ok(stockRequestDtos);
     }
 
     @PostMapping
-    public ResponseEntity<Stock> insert(@RequestBody Stock stock){
+    public ResponseEntity<Stock> insert(@RequestBody @Valid Stock stock){
         return ResponseEntity.ok(stockService.insert(stock));
     }
 
