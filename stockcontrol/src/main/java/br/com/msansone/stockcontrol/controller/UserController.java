@@ -3,7 +3,6 @@ package br.com.msansone.stockcontrol.controller;
 import br.com.msansone.stockcontrol.Service.UserService;
 import br.com.msansone.stockcontrol.dto.UserRequestDto;
 import br.com.msansone.stockcontrol.exceptions.InvalidFormatExcption;
-import br.com.msansone.stockcontrol.exceptions.UserNotFoundException;
 import br.com.msansone.stockcontrol.model.User;
 import jakarta.validation.Valid;
 
